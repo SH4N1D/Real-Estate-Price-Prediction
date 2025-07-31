@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Profile</title>
+</head>
+<body>
+
+    <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+
+    <h2>User Profile</h2>
+
+    <h3>Profile Details</h3>
+    <p>image:</p>
+    <p>Name: </p>
+    <p>Email: </p>
+    <p>Phone: </p>
+
+    <h3>Registered Properties</h3>
+
+    <div>
+        <h4>Property Title</h4>
+        <p>Street:</p>
+        <p>Bedrooms:</p>
+        <p>Bathrooms:</p>
+        <p>Sqft:</p>
+        <p>Price:</p>
+        <p>Status:</p>
+        <form method="post">
+            <button type="submit">Delete</button>
+        </form>
+    </div>
+
+
+</body>
+</html>

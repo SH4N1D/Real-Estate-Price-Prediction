@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Price Prediction</title>
+</head>
+<body>
+
+    <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+    <h2>Property Price Prediction</h2>
+
+    <form>
+        <label for="street">Street:</label><br>
+        <input type="text" id="street" name="street"><br><br>
+
+        <label for="bed">Bedrooms:</label><br>
+        <input type="number" id="bed" name="bed"><br><br>
+
+        <label for="bath">Bathrooms:</label><br>
+        <input type="number" id="bath" name="bath"><br><br>
+
+        <label for="sqft">Square Feet:</label><br>
+        <input type="number" id="sqft" name="sqft"><br><br>
+
+        <button type="submit">Predict</button>
+    </form>
+
+    <h3>Price:</h3>
+    <p id="predicted-price"></p>
+
+</body>
+</html>
