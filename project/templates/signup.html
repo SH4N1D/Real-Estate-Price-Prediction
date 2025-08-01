@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign Up</title>
+</head>
+<body>
+    <h2>User Registration</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label>Username:</label>
+        <input type="text" name="username" required><br><br>
+
+        <label>Email:</label>
+        <input type="email" name="email" required><br><br>
+
+        <label>Password:</label>
+        <input type="password" name="password" required><br><br>
+
+        <label>Confirm Password:</label>
+        <input type="password" name="confirm_password" required><br><br>
+
+        <label>First Name:</label>
+        <input type="text" name="fname" required><br><br>
+
+        <label>Last Name:</label>
+        <input type="text" name="lname" required><br><br>
+
+        <label>Phone:</label>
+        <input type="text" name="phone" required><br><br>
+
+        <label>Place:</label>
+        <input type="text" name="place" required><br><br>
+
+        <label>Profile Image:</label>
+        <input type="file" name="image"><br><br>
+
+        <button type="submit">Register</button>
+    </form>
+    <br>
+    <a href="{% url 'login' %}">Already have an account? Login</a>
+</body>
+</html>

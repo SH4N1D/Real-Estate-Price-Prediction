@@ -3,21 +3,24 @@
     <title>Property Details</title>
 </head>
 <body>
-
     <a href="{% url 'dashboard' %}">Back to Dashboard</a>
-
     <h1>Property Details</h1>
-   <p>Image:</p>
-    <p><strong>Street:</strong> </p>
-    <p><strong>Area:</strong> </p>
-    <p><strong>Bedrooms:</strong></p>
-    <p><strong>Bathrooms:</strong> </p>
-    <p><strong>Price:</strong></p>
-    <p><strong>Description:</strong> </p>
+    <img src="{{ property.image1.url }}" alt="Property Image" width="200"><br>
+    <img src="{{ property.image2.url }}" alt="Property Image" width="200"><br>
+    <img src="{{ property.image3.url }}" alt="Property Image" width="200"><br>
+    <img src="{{ property.image4.url }}" alt="Property Image" width="200"><br>
+    <p><strong>Property Name:</strong> {{ property.property_name }}</p>
+    <p><strong>Street:</strong> {{ property.street }}</p>
+    <p><strong>Area:</strong> {{ property.area }}</p>
+    <p><strong>Bedrooms:</strong> {{ property.bed }}</p>
+    <p><strong>Bathrooms:</strong> {{ property.bath }}</p>
+    <p><strong>Price:</strong> {{ property.price }}</p>
     <hr>
     <h2>Owner Details</h2>
-    <p><strong>Owner Name:</strong></p>
-    <p><strong>Phone:</strong></p>
-    <a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ user.email }}" target="_blank">Contact Owner via Gmail</a><br><br>
+    <img src="{{ user.image.url }}" alt="Owner Image" width="100"><br>
+    <p><strong>Owner Name:</strong> {{ user.fname }} {{ user.lname }}</p>
+    <p><strong>Phone:</strong> {{ user.phone }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ user.email }}" target="_blank">Contact Owner via Gmail</a>
 </body>
 </html>

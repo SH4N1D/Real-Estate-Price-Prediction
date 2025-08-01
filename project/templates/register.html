@@ -9,8 +9,9 @@
 
     <h2>Register New Property</h2>
 
-    <form method="post" enctype="multipart/form-data">
 
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
         <label for="property_name">Property Title:</label><br>
         <input type="text" id="property_name" name="property_name" required><br><br>
 
@@ -32,9 +33,6 @@
         <label for="image4">Image 4:</label><br>
         <input type="file" id="image4" name="image4"><br><br>
 
-
-        <label for="image3">Image 3:</label><br>
-        <input type="file" id="image3" name="image3"><br><br>
 
 
         <label for="bed">Bedrooms:</label><br>

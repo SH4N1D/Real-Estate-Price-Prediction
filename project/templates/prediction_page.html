@@ -9,6 +9,9 @@
     <h2>Property Price Prediction</h2>
 
     <form>
+
+        {% csrf_token %}
+
         <label for="street">Street:</label><br>
         <input type="text" id="street" name="street"><br><br>
 

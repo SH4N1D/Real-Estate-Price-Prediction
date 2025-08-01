@@ -2,6 +2,13 @@
 <head>
     <title>Dashboard</title>
 </head>
+{% if messages %}
+    <script>
+        {% for message in messages %}
+            alert("{{ message|escapejs }}");
+        {% endfor %}
+    </script>
+{% endif %}
 <body>
     <div>
         <h1>Welcome to the Home Page</h1>
@@ -16,28 +23,21 @@
         </ul>
     </nav>
     <h2>Properties</h2>
-    <p>Here are some properties:</p>
-    <table border="1">
-        <tr>
-            <th>Property Title</th>
-            <th>Street</th>
-            <th>Square Feet</th>
-            <th>Image</th>
-            <th>Bedrooms</th>
-            <th>Bathrooms</th>
-            <th>Price</th>
-            <th>Click for more</th>
-        </tr>
-        <tr>
-            <td>Property 1</td>
-            <td>123 Main St</td>
-            <td>1500</td>
-            <td><img src="property1.jpg" alt="Property Image" width="100"></td>
-            <td>3</td>
-            <td>2</td>
-            <td>$300,000</td>
-            <td><a href="{% url 'property_page' %}">View More</a></td>
-   
-
-</body>
+    <div class="card-container">
+        {% for property in val %}
+        <div class="property-card">
+            <img src="{{ property.image1.url }}" alt="Property Image">
+            <h3>{{ property.property_name }}</h3>
+            <p><strong>Street:</strong> {{ property.street }}</p>
+            <p><strong>Area:</strong> {{ property.area }}</p>
+            <p><strong>Bedrooms:</strong> {{ property.bed }}</p>
+            <p><strong>Bathrooms:</strong> {{ property.bath }}</p>
+            <p><strong>Price:</strong> ${{ property.price }}</p>
+            <a href="{% url 'property_page' property.id %}">View More</a>
+        </div>
+        {% empty %}
+        <p>No properties found.</p>
+        {% endfor %}
+    </div>
+    </body>
 </html>
