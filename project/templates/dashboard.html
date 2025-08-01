@@ -23,6 +23,15 @@
         </ul>
     </nav>
     <h2>Properties</h2>
+    <form method="get" action="{% url 'dashboard_search' %}">
+    <input type="text" name="location" placeholder="Location" value="{{ location|default:'' }}">
+    <input type="text" name="area" placeholder="Area" value="{{ area|default:'' }}">
+    <input type="number" name="min_price" placeholder="Min Price" value="{{ min_price|default:'' }}">
+    <input type="number" name="max_price" placeholder="Max Price" value="{{ max_price|default:'' }}">
+    <input type="number" name="bedrooms" placeholder="Bedrooms" value="{{ bedrooms|default:'' }}">
+    <input type="number" name="bathrooms" placeholder="Bathrooms" value="{{ bathrooms|default:'' }}">
+    <button type="submit">Search</button>
+    </form>
     <div class="card-container">
         {% for property in val %}
         <div class="property-card">

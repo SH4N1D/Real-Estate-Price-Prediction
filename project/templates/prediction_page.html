@@ -1,34 +1,30 @@
+<!-- filepath: c:\Users\shani\Desktop\ACADEMY\PG\Mini project\re project\project\templates\prediction_page.html -->
 <!DOCTYPE html>
 <html>
 <head>
     <title>Price Prediction</title>
 </head>
 <body>
-
-    <a href="{% url 'dashboard' %}">Back to Dashboard</a>
-    <h2>Property Price Prediction</h2>
-
-    <form>
-
+    <a href="{% url 'dashboard' %}">Back to Dashboard</a><br>
+    <h2>Predict House Price</h2>
+    <form method="post">
         {% csrf_token %}
-
-        <label for="street">Street:</label><br>
-        <input type="text" id="street" name="street"><br><br>
-
-        <label for="bed">Bedrooms:</label><br>
-        <input type="number" id="bed" name="bed"><br><br>
-
-        <label for="bath">Bathrooms:</label><br>
-        <input type="number" id="bath" name="bath"><br><br>
-
-        <label for="sqft">Square Feet:</label><br>
-        <input type="number" id="sqft" name="sqft"><br><br>
-
+        <label>Location:</label>
+        <select name="location" required>
+            {% for loc in locations %}
+                <option value="{{ loc }}">{{ loc }}</option>
+            {% endfor %}
+        </select><br><br>
+        <label>Square Feet:</label>
+        <input type="number" name="sqft" required placeholder="e.g. 500" min="1"><br><br>
+        <label>BHK:</label>
+        <input type="number" name="bhk" required placeholder="e.g. 1" min="1"><br><br>
+        <label>Bath:</label>
+        <input type="number" name="bath" required placeholder="e.g. 1" min="1"><br><br>
         <button type="submit">Predict</button>
     </form>
-
-    <h3>Price:</h3>
-    <p id="predicted-price"></p>
-
+    {% if price %}
+        <h3>Estimated Price: ₹ {{ price }} Lakh</h3>
+    {% endif %}
 </body>
 </html>

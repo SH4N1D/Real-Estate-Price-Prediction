@@ -4,7 +4,9 @@ from .models import *
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
-
+from django.db.models import Q
+from .ml_model import get_location_names, get_estimated_price
+from django.contrib import messages
 
 
 # Create your views here.
@@ -29,13 +31,20 @@ def property_page(request, property_id):
 
 
 def prediction_page(request):
-    # Check if user is logged in
     if not request.session.get('user_id'):
         return redirect('login')
-    return render(request, 'prediction_page.html')
+    locations = get_location_names()
+    price = None
+    if request.method == 'POST':
+        location = request.POST.get('location')
+        sqft = float(request.POST.get('sqft'))
+        bhk = int(request.POST.get('bhk'))
+        bath = int(request.POST.get('bath'))
+        price = get_estimated_price(location, sqft, bhk, bath)
+    return render(request, 'prediction_page.html', {'locations': locations, 'price': price})
 
 
-from django.contrib import messages
+
 
 def reg_page(request):
     # Check if user is logged in
@@ -156,7 +165,7 @@ def signup(request):
 def logout_view(request):
     # Clear session
     request.session.flush()
-    return redirect('login')
+    return redirect('home')
 
 def delete_property(request, property_id):
     if not request.session.get('user_id'):
@@ -168,5 +177,75 @@ def delete_property(request, property_id):
     return redirect('profile')
 
 
+def dashboard_search(request):
+    if not request.session.get('user_id'):
+        return redirect('login')
 
+    location = request.GET.get('location', '')
+    area = request.GET.get('area', '')
+    min_price = request.GET.get('min_price', '')
+    max_price = request.GET.get('max_price', '')
+    bedrooms = request.GET.get('bedrooms', '')
+    bathrooms = request.GET.get('bathrooms', '')
+
+    properties = property_table.objects.filter(status="accepted")
+
+    if location:
+        properties = properties.filter(Q(street__icontains=location))
+    if area:
+        properties = properties.filter(area__icontains=area)
+    if min_price:
+        properties = properties.filter(price__gte=min_price)
+    if max_price:
+        properties = properties.filter(price__lte=max_price)
+    if bedrooms:
+        properties = properties.filter(bed=bedrooms)
+    if bathrooms:
+        properties = properties.filter(bath=bathrooms)
+
+    return render(request, 'dashboard.html', {
+        'val': properties,
+        'location': location,
+        'area': area,
+        'min_price': min_price,
+        'max_price': max_price,
+        'bedrooms': bedrooms,
+        'bathrooms': bathrooms,
+    })
+
+
+def profile_search(request):
+    if not request.session.get('user_id'):
+        return redirect('login')
+    user_id = request.session.get('user_id')
+    user_obj = user_table.objects.get(id=user_id)
+
+    query = request.GET.get('q', '')
+    area = request.GET.get('area', '')
+    min_price = request.GET.get('min_price', '')
+    max_price = request.GET.get('max_price', '')
+
+    properties = property_table.objects.filter(USER=user_obj)
+
+    if query:
+        properties = properties.filter(
+            Q(property_name__icontains=query) |
+            Q(street__icontains=query) |
+            Q(description__icontains=query)
+        )
+    if area:
+        properties = properties.filter(area__icontains=area)
+    if min_price:
+        properties = properties.filter(price__gte=min_price)
+    if max_price:
+        properties = properties.filter(price__lte=max_price)
+
+    return render(request, 'profile.html', {
+        'user': user_obj,
+        'properties': properties,
+        'query': query,
+        'area': area,
+        'min_price': min_price,
+        'max_price': max_price,
+    })
 
