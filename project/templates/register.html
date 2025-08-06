@@ -1,3 +1,7 @@
+{% extends 'base.html' %}
+
+
+{% comment %} 
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,4 +61,80 @@
     </form>
 
 </body>
-</html>
+</html> {% endcomment %}
+
+
+
+
+
+
+
+
+
+{% load static %}
+
+{% block title %}Register Property{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="neumorphic-card form-container" data-aos="fade-up">
+        <h1 class="gradient-text">Register New Property</h1>
+
+        <form method="post" enctype="multipart/form-data" class="neumorphic-form">
+            {% csrf_token %}
+            <div class="form-grid">
+                <div class="form-group-item">
+                    <label for="property_name"><i class="fa-solid fa-house"></i> Property Title:</label>
+                    <input type="text" id="property_name" name="property_name" required placeholder="e.g., 3BHK Apartment" class="neumorphic-input">
+                </div>
+                <div class="form-group-item">
+                    <label for="street"><i class="fa-solid fa-road"></i> Street:</label>
+                    <input type="text" id="street" name="street" placeholder="e.g., Koramangala 5th Block" class="neumorphic-input">
+                </div>
+                <div class="form-group-item">
+                    <label for="bed"><i class="fa-solid fa-bed"></i> Bedrooms:</label>
+                    <input type="number" id="bed" name="bed" min="1" placeholder="e.g., 3" class="neumorphic-input">
+                </div>
+                <div class="form-group-item">
+                    <label for="bath"><i class="fa-solid fa-bath"></i> Bathrooms:</label>
+                    <input type="number" id="bath" name="bath" min="1" placeholder="e.g., 2" class="neumorphic-input">
+                </div>
+                <div class="form-group-item">
+                    <label for="sqft"><i class="fa-solid fa-ruler-combined"></i> Square Feet:</label>
+                    <input type="number" id="sqft" name="sqft" min="1" placeholder="e.g., 1500" class="neumorphic-input">
+                </div>
+                <div class="form-group-item">
+                    <label for="price"><i class="fa-solid fa-indian-rupee-sign"></i> Price:</label>
+                    <input type="number" id="price" name="price" min="1" placeholder="e.g., 8500000" class="neumorphic-input">
+                </div>
+                <div class="form-group-item">
+                    <label for="status"><i class="fa-solid fa-check"></i> Status:</label>
+                    <input type="text" id="status" name="status" value="Pending" readonly class="neumorphic-input">
+                </div>
+                <div class="form-group-item">
+                    <label for="area"><i class="fa-solid fa-square-full"></i> Area:</label>
+                    <input type="text" id="area" name="area" placeholder="e.g., Koramangala" class="neumorphic-input">
+                </div>
+                <div class="form-group-full">
+                    <label for="description"><i class="fa-solid fa-file-alt"></i> Description:</label>
+                    <textarea id="description" name="description" placeholder="Enter a detailed description of the property." class="neumorphic-textarea"></textarea>
+                </div>
+                <div class="form-group-full image-upload-group">
+                    <label for="image1" class="image-upload-label"><i class="fa-solid fa-image"></i> Image 1:</label>
+                    <input type="file" id="image1" name="image1" class="neumorphic-input-file">
+                    <label for="image2" class="image-upload-label"><i class="fa-solid fa-image"></i> Image 2:</label>
+                    <input type="file" id="image2" name="image2" class="neumorphic-input-file">
+                    <label for="image3" class="image-upload-label"><i class="fa-solid fa-image"></i> Image 3:</label>
+                    <input type="file" id="image3" name="image3" class="neumorphic-input-file">
+                    <label for="image4" class="image-upload-label"><i class="fa-solid fa-image"></i> Image 4:</label>
+                    <input type="file" id="image4" name="image4" class="neumorphic-input-file">
+                </div>
+            </div>
+
+            <button type="submit" class="neumorphic-button register-button">Register Property</button>
+        </form>
+    </div>
+{% endblock %}

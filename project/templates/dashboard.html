@@ -1,4 +1,6 @@
-<html>
+{% extends 'base.html' %}
+
+{% comment %} <html>
 <head>
     <title>Dashboard</title>
 </head>
@@ -49,4 +51,78 @@
         {% endfor %}
     </div>
     </body>
-</html>
+</html> {% endcomment %}
+
+
+
+
+
+
+
+
+
+
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+{% if messages %}
+<script>
+{% for message in messages %}
+alert("{{ message|escapejs }}");
+{% endfor %}
+</script>
+{% endif %}
+
+<div class="neumorphic-card" data-aos="fade-up">
+<h1 class="gradient-text" data-aos="fade-right">Property Dashboard</h1>
+<p data-aos="fade-left">Browse through the properties and find your perfect match in Bengaluru.</p>
+</div>
+
+<div class="neumorphic-card" data-aos="fade-up" data-aos-delay="200">
+<h2 class="gradient-text" data-aos="fade-right">Search for Properties</h2>
+<form method="get" action="{% url 'dashboard_search' %}" class="neumorphic-form" data-aos="fade-up" data-aos-delay="300">
+<input type="text" name="location" placeholder="Location" value="{{ location|default:'' }}" class="neumorphic-input">
+<input type="text" name="area" placeholder="Area" value="{{ area|default:'' }}" class="neumorphic-input">
+<input type="number" name="min_price" placeholder="Min Price" value="{{ min_price|default:'' }}" class="neumorphic-input">
+<input type="number" name="max_price" placeholder="Max Price" value="{{ max_price|default:'' }}" class="neumorphic-input">
+<input type="number" name="bedrooms" placeholder="Bedrooms" value="{{ bedrooms|default:'' }}" class="neumorphic-input">
+<input type="number" name="bathrooms" placeholder="Bathrooms" value="{{ bathrooms|default:'' }}" class="neumorphic-input">
+<button type="submit" class="neumorphic-button">Search</button>
+</form>
+</div>
+
+<div class="neumorphic-card" data-aos="fade-up" data-aos-delay="400">
+<h2 class="gradient-text">Properties</h2>
+<div class="property-grid">
+{% for property in val %}
+<div class="property-card neumorphic-card-inner" data-aos="zoom-in">
+<img src="{{ property.image1.url }}" alt="Property Image" class="card-image">
+
+<div class="card-content">
+<div class="price-section">
+<span class="main-price">${{ property.price }}</span>
+</div>
+
+<h3 class="card-title">{{ property.property_name }}</h3>
+
+<div class="quick-stats">
+<p><i class="fa-solid fa-bed property-icon"></i> {{ property.bed }} Bedrooms</p>
+<p><i class="fa-solid fa-bath property-icon"></i> {{ property.bath }} Bathrooms</p>
+<p><i class="fa-solid fa-ruler-combined property-icon"></i> {{ property.area }} Sqft</p>
+</div>
+
+<a href="{% url 'property_page' property.id %}" class="neumorphic-button view-details-button">View Details</a>
+</div>
+</div>
+{% empty %}
+<p>No properties found.</p>
+{% endfor %}
+</div>
+</div>
+{% endblock %}

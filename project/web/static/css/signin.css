@@ -1,0 +1,83 @@
+/* ============================================================= */
+/* SIGNIN PAGE STYLES */
+/* ============================================================= */
+
+.form-container {
+    max-width: 600px;
+    margin: 50px auto;
+    text-align: center;
+    padding: 40px;
+}
+
+.neumorphic-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.form-group-item {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.form-group-item label {
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.neumorphic-input {
+    width: 100%;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 15px;
+    background: var(--background-color);
+    color: var(--text-color);
+    box-shadow: 
+        inset 4px 4px 8px var(--neumorphic-dark),
+        inset -4px -4px 8px var(--neumorphic-light);
+    transition: all 0.3s ease;
+    outline: none;
+    font-family: 'Poppins', sans-serif;
+    min-height: 48px;
+    box-sizing: border-box;
+}
+
+.neumorphic-input:focus {
+    box-shadow: 
+        inset 2px 2px 5px var(--neumorphic-dark),
+        inset -2px -2px 5px var(--neumorphic-light);
+}
+
+.login-button {
+    margin-top: 40px;
+    width: auto;
+    max-width: 250px;
+    align-self: center;
+}
+
+.link-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.link-group p {
+    margin: 0;
+}
+
+.link-group a {
+    text-decoration: none;
+    color: var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.link-group a:hover {
+    color: var(--secondary-color);
+}

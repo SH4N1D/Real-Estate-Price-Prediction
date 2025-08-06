@@ -1,5 +1,6 @@
-<!DOCTYPE html>
-<html>
+{% extends "base.html" %}
+
+{% comment %} <html>
 <head>
     <title>Sign Up</title>
 </head>
@@ -39,4 +40,83 @@
     <br>
     <a href="{% url 'login' %}">Already have an account? Login</a>
 </body>
-</html>
+</html> {% endcomment %}
+
+
+
+
+
+
+
+
+
+{% load static %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="neumorphic-card signup-card" data-aos="fade-up">
+        <h1 class="gradient-text">Create an Account</h1>
+        <p class="join-community-text">Join our community to get started.</p>
+
+        <form method="POST" enctype="multipart/form-data" class="neumorphic-form">
+            {% csrf_token %}
+
+            <h3 class="form-section-heading">Account Information</h3>
+            <div class="form-grid">
+                <div class="form-group-item">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required placeholder="Choose a unique username" class="neumorphic-input">
+                </div>
+                <div class="form-group-item">
+                    <label for="email">Email Address:</label>
+                    <input type="email" id="email" name="email" required placeholder="you@example.com" class="neumorphic-input">
+                </div>
+                <div class="form-group-item">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required placeholder="Enter a strong password" class="neumorphic-input">
+                </div>
+                <div class="form-group-item">
+                    <label for="confirm_password">Confirm Password:</label>
+                    <input type="password" id="confirm_password" name="confirm_password" required placeholder="Re-enter your password" class="neumorphic-input">
+                </div>
+            </div>
+
+            <h3 class="form-section-heading">Personal Details</h3>
+            <div class="form-grid">
+                <div class="form-group-item">
+                    <label for="fname">First Name:</label>
+                    <input type="text" id="fname" name="fname" required placeholder="e.g., Anjali" class="neumorphic-input">
+                </div>
+                <div class="form-group-item">
+                    <label for="lname">Last Name:</label>
+                    <input type="text" id="lname" name="lname" required placeholder="e.g., Menon" class="neumorphic-input">
+                </div>
+                <div class="form-group-item">
+                    <label for="phone">Phone:</label>
+                    <input type="text" id="phone" name="phone" required placeholder="Your contact number" class="neumorphic-input">
+                </div>
+                <div class="form-group-item">
+                    <label for="place">Place:</label>
+                    <input type="text" id="place" name="place" required placeholder="e.g., Kozhikode, Kerala" class="neumorphic-input">
+                </div>
+            </div>
+
+            <h3 class="form-section-heading">Profile Image (Optional)</h3>
+            <div class="form-group-full">
+                <label for="image">Choose File</label>
+                <input type="file" id="image" name="image" class="neumorphic-input-file">
+            </div>
+
+            <button type="submit" class="neumorphic-button register-button">Register</button>
+        </form>
+
+        <div class="login-link">
+            <a href="{% url 'login' %}">Already have an account? Login</a>
+        </div>
+    </div>
+{% endblock %}

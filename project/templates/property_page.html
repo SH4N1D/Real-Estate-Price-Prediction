@@ -1,4 +1,7 @@
-<!-- filepath: c:\Users\shani\Desktop\ACADEMY\PG\Mini project\re project\project\templates\property_page.html -->
+{% extends 'base.html' %}
+
+
+{% comment %} <!-- filepath: c:\Users\shani\Desktop\ACADEMY\PG\Mini project\re project\project\templates\property_page.html -->
 <html>
 <head>
     <title>Property Details</title>
@@ -27,4 +30,71 @@
     <p><strong>Place:</strong> {{ user.place }}</p>
     <a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ user.email }}" target="_blank">Contact Owner via Gmail</a>
 </body>
-</html>
+</html> {% endcomment %}
+
+
+
+
+
+
+
+
+
+
+
+{% load static %}
+
+{% block title %}Property Details{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/property_page.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="property-page-container" data-aos="fade-up">
+        
+
+        <div class="top-row-containers" data-aos="fade-up">
+            <div class="neumorphic-card details-section">
+                <h1 class="gradient-text">{{ property.property_name }}</h1>
+                <p class="property-description">{{ property.description }}</p>
+                
+                <h2 class="gradient-text details-heading">Property Details</h2>
+                <div class="details-list-grid">
+                    <p><i class="fa-solid fa-location-dot property-icon"></i> <strong>Street:</strong> {{ property.street }}</p>
+                    <p><i class="fa-solid fa-square-full property-icon"></i> <strong>Area:</strong> {{ property.area }}</p>
+                    <p><i class="fa-solid fa-bed property-icon"></i> <strong>Bedrooms:</strong> {{ property.bed }}</p>
+                    <p><i class="fa-solid fa-bath property-icon"></i> <strong>Bathrooms:</strong> {{ property.bath }}</p>
+                    <p><i class="fa-solid fa-indian-rupee-sign property-icon"></i> <strong>Price:</strong> ${{ property.price }}</p>
+                </div>
+            </div>
+
+            <div class="neumorphic-card image-gallery-section" data-aos="fade-left">
+                <h2 class="gradient-text">Property Images</h2>
+                <div class="image-gallery-grid">
+                    <img src="{{ property.image1.url }}" alt="Property Image 1" class="gallery-image">
+                    <img src="{{ property.image2.url }}" alt="Property Image 2" class="gallery-image">
+                    <img src="{{ property.image3.url }}" alt="Property Image 3" class="gallery-image">
+                    <img src="{{ property.image4.url }}" alt="Property Image 4" class="gallery-image">
+                </div>
+            </div>
+        </div>
+
+        <div class="neumorphic-card owner-info-container" data-aos="fade-up" data-aos-delay="200">
+            <h2 class="gradient-text">Owner Details</h2>
+            <div class="owner-details">
+                <div class="owner-image-container">
+                    <img src="{{ user.image.url }}" alt="Owner Image" class="owner-image">
+                </div>
+                <div class="owner-text">
+                    <p><strong>Owner Name:</strong> {{ user.fname }} {{ user.lname }}</p>
+                    <p><strong>Username:</strong> {{ user.username }}</p>
+                    <p><strong>Phone:</strong> {{ user.phone }}</p>
+                    <p><strong>Email:</strong> {{ user.email }}</p>
+                    <p><strong>Place:</strong> {{ user.place }}</p>
+                </div>
+            </div>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ user.email }}" target="_blank" class="neumorphic-button contact-button">Contact Owner via Gmail</a>
+        </div>
+    </div>
+{% endblock %}

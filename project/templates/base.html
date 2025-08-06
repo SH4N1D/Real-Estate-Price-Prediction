@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Bengaluru Real Estate{% endblock %}</title>
+    
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="theme-toggle-container" id="theme-toggle-container">
+            <div id="theme-toggle" class="theme-toggle-button"></div>
+        </div>
+
+        <nav class="top-nav">
+            <a href="{% url 'home' %}" class="neumorphic-button">Home</a>
+            <a href="{% url 'prediction_page' %}" class="neumorphic-button">Prediction</a>
+            <a href="{% url 'reg_page' %}" class="neumorphic-button">Register</a>
+            <a href="{% url 'dashboard' %}" class="neumorphic-button">Dashboard</a>
+            <a href="{% url 'profile' %}" class="neumorphic-button">Profile</a>
+        </nav>
+
+        <div class="main-content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

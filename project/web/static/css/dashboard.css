@@ -1,0 +1,125 @@
+/* ============================================================= */
+/* DASHBOARD SECTIONS */
+/* ============================================================= */
+
+/* Dashboard Search Form */
+.neumorphic-form {
+display: flex;
+flex-wrap: wrap;
+gap: 15px;
+justify-content: center;
+align-items: center;
+}
+
+.neumorphic-input {
+flex: 1 1 200px;
+padding: 12px 20px;
+border: none;
+border-radius: 15px;
+background: var(--background-color);
+color: var(--text-color);
+box-shadow:
+inset 4px 4px 8px var(--neumorphic-dark),
+inset -4px -4px 8px var(--neumorphic-light);
+transition: all 0.3s ease;
+outline: none;
+}
+
+.neumorphic-input::placeholder {
+color: var(--text-color);
+opacity: 0.5;
+}
+
+.neumorphic-input:focus {
+box-shadow:
+inset 2px 2px 5px var(--neumorphic-dark),
+inset -2px -2px 5px var(--neumorphic-light);
+}
+
+/* Property Grid and Card */
+.property-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+gap: 30px;
+margin-top: 30px;
+}
+
+.property-card {
+background: var(--card-background);
+padding: 0;
+border-radius: 20px;
+box-shadow:
+6px 6px 12px var(--neumorphic-dark),
+-6px -6px 12px var(--neumorphic-light);
+transition: transform 0.3s ease;
+overflow: hidden;
+display: flex;
+flex-direction: column;
+}
+
+.property-card:hover {
+transform: translateY(-5px);
+box-shadow:
+8px 8px 16px var(--neumorphic-dark),
+-8px -8px 16px var(--neumorphic-light);
+}
+
+.card-image {
+width: 100%;
+height: 200px; /* Adjust height as needed */
+object-fit: cover;
+border-radius: 15px 15px 0 0;
+box-shadow: none;
+padding: 0;
+background: none;
+flex-shrink: 0;
+}
+
+.card-content {
+padding: 20px;
+display: flex;
+flex-direction: column;
+gap: 15px;
+}
+
+.price-section {
+display: flex;
+justify-content: flex-start; /* Align price to the left */
+align-items: center;
+}
+
+.main-price {
+font-size: 1.8rem;
+font-weight: 600;
+color: var(--primary-color);
+}
+
+.card-title {
+font-weight: 600;
+font-size: 1.3rem; /* Slightly smaller title */
+color: var(--text-color);
+margin: 0;
+}
+
+.quick-stats {
+display: flex;
+flex-wrap: wrap;
+gap: 10px 20px;
+margin-bottom: 15px; /* Add some space before the button */
+}
+
+.quick-stats p {
+margin: 0;
+font-size: 0.9rem;
+display: flex;
+align-items: center;
+gap: 5px;
+}
+
+.view-details-button {
+margin-top: auto; /* Push to the bottom of the card content */
+width: 100%; /* Make the button wider */
+padding: 15px;
+text-align: center;
+box-sizing: border-box;
+}

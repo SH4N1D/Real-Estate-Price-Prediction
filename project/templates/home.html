@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% comment %} <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,4 +15,65 @@
         <a href="{% url 'dashboard' %}">Dashboard</a>
     </div>
 </body>
-</html>
+</html>    {% endcomment %}
+
+
+
+
+
+
+
+
+
+
+
+
+{% load static %}
+
+{% block title %}Home Page{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="neumorphic-card" data-aos="fade-up">
+        <div class="split-container">
+            <div class="text-column">
+                <h1 class="gradient-text" data-aos="fade-right">Find Your Perfect Property in Bengaluru</h1>
+                <p data-aos="fade-left">Discover and list properties in the heart of Bengaluru's bustling real estate market. Our platform makes it easy to find your dream home or connect with potential buyers, all with transparent and simple tools.</p>
+                <div class="link-group" data-aos="fade-up" data-aos-delay="200">
+                    <a href="{% url 'signup' %}" class="neumorphic-button">Sign Up</a>
+                    <a href="{% url 'login' %}" class="neumorphic-button">Sign In</a>
+                </div>
+            </div>
+            <div class="image-column" data-aos="zoom-in" data-aos-delay="500">
+                <img src="{% static 'images/main.png' %}" alt="Bengaluru Cityscape" class="main-image">
+            </div>
+        </div>
+    </div>
+
+    <div class="neumorphic-card" data-aos="fade-up">
+        <div class="split-container">
+            <div class="text-column">
+                <h2 class="gradient-text" data-aos="fade-right"> Property Price Prediction</h2>
+                <p data-aos="fade-left">Our integrated price prediction model gives you an instant and reliable estimate of any property's value in Bengaluru. Powered by data and machine learning, you can make informed decisions whether you are buying or selling.</p>
+            </div>
+            <div class="image-column" data-aos="zoom-in" data-aos-delay="200">
+                <img src="{% static 'images/main2.png' %}" alt="Price Prediction Graph" class="main-image">
+            </div>
+        </div>
+    </div>
+    
+    <div class="neumorphic-card" data-aos="fade-up">
+        <div class="split-container">
+            <div class="image-column" data-aos="zoom-in" data-aos-delay="200">
+                <img src="{% static 'images/main3.png' %}" alt="User Profile Interface" class="main-image">
+            </div>
+            <div class="text-column">
+                <h2 class="gradient-text" data-aos="fade-left">Manage Your Properties with Ease</h2>
+                <p data-aos="fade-right">Your personalized profile section allows you to register new properties, view all your listings, and remove them when they're no longer available. Keep track of your real estate portfolio in one simple, intuitive dashboard.</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

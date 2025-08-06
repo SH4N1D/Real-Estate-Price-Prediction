@@ -1,4 +1,8 @@
-<!-- filepath: c:\Users\shani\Desktop\ACADEMY\PG\Mini project\re project\project\templates\prediction_page.html -->
+{% extends 'base.html' %}
+
+
+
+{% comment %} 
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,4 +31,63 @@
         <h3>Estimated Price: ₹ {{ price }} Lakh</h3>
     {% endif %}
 </body>
-</html>
+</html> {% endcomment %}
+
+
+
+
+
+ 
+
+{% load static %}
+
+{% block title %}Price Prediction{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/prediction.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="neumorphic-card form-container" data-aos="fade-up">
+        <h1 class="gradient-text">Predict House Price</h1>
+        <p class="form-description">Enter the details below to get an estimated price for your property in Bengaluru.</p>
+
+        <form method="post" class="neumorphic-form">
+            {% csrf_token %}
+            <div class="form-grid">
+                <div class="form-group-item">
+                    <label for="location"><i class="fa-solid fa-location-dot"></i> Location:</label>
+                    <select name="location" id="location" required class="neumorphic-input">
+                        {% for loc in locations %}
+                            <option value="{{ loc }}">{{ loc }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group-item">
+                    <label for="sqft"><i class="fa-solid fa-ruler-combined"></i> Square Feet:</label>
+                    <input type="number" id="sqft" name="sqft" required placeholder="e.g. 500" min="1" class="neumorphic-input">
+                </div>
+
+                <div class="form-group-item">
+                    <label for="bhk"><i class="fa-solid fa-bed"></i> BHK:</label>
+                    <input type="number" id="bhk" name="bhk" required placeholder="e.g. 1" min="1" class="neumorphic-input">
+                </div>
+
+                <div class="form-group-item">
+                    <label for="bath"><i class="fa-solid fa-bath"></i> Bath:</label>
+                    <input type="number" id="bath" name="bath" required placeholder="e.g. 1" min="1" class="neumorphic-input">
+                </div>
+            </div>
+
+            <button type="submit" class="neumorphic-button register-button">Predict</button>
+        </form>
+
+        {% if price %}
+            <div class="neumorphic-card price-result-card" data-aos="fade-up" data-aos-delay="200">
+                <h3 class="gradient-text">Estimated Price:</h3>
+                <p class="price-output">₹ {{ price }} Lakh</p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
