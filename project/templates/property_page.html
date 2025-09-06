@@ -41,7 +41,6 @@
 
 
 
-
 {% load static %}
 
 {% block title %}Property Details{% endblock %}
@@ -52,8 +51,6 @@
 
 {% block content %}
     <div class="property-page-container" data-aos="fade-up">
-        
-
         <div class="top-row-containers" data-aos="fade-up">
             <div class="neumorphic-card details-section">
                 <h1 class="gradient-text">{{ property.property_name }}</h1>
@@ -66,16 +63,25 @@
                     <p><i class="fa-solid fa-bed property-icon"></i> <strong>Bedrooms:</strong> {{ property.bed }}</p>
                     <p><i class="fa-solid fa-bath property-icon"></i> <strong>Bathrooms:</strong> {{ property.bath }}</p>
                     <p><i class="fa-solid fa-indian-rupee-sign property-icon"></i> <strong>Price:</strong> ${{ property.price }}</p>
+                    <p><i class="fa-solid fa-chart-line property-icon"></i> <strong>Predicted Price:</strong> ₹{{ predicted_price }} Lakh</p>
                 </div>
             </div>
 
             <div class="neumorphic-card image-gallery-section" data-aos="fade-left">
                 <h2 class="gradient-text">Property Images</h2>
                 <div class="image-gallery-grid">
-                    <img src="{{ property.image1.url }}" alt="Property Image 1" class="gallery-image">
-                    <img src="{{ property.image2.url }}" alt="Property Image 2" class="gallery-image">
-                    <img src="{{ property.image3.url }}" alt="Property Image 3" class="gallery-image">
-                    <img src="{{ property.image4.url }}" alt="Property Image 4" class="gallery-image">
+                    <div class="gallery-image-container">
+                        <img src="{{ property.image1.url }}" alt="Property Image 1" class="gallery-image">
+                    </div>
+                    <div class="gallery-image-container">
+                        <img src="{{ property.image2.url }}" alt="Property Image 2" class="gallery-image">
+                    </div>
+                    <div class="gallery-image-container">
+                        <img src="{{ property.image3.url }}" alt="Property Image 3" class="gallery-image">
+                    </div>
+                    <div class="gallery-image-container">
+                        <img src="{{ property.image4.url }}" alt="Property Image 4" class="gallery-image">
+                    </div>
                 </div>
             </div>
         </div>
@@ -94,7 +100,10 @@
                     <p><strong>Place:</strong> {{ user.place }}</p>
                 </div>
             </div>
-            <a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ user.email }}" target="_blank" class="neumorphic-button contact-button">Contact Owner via Gmail</a>
+            <!-- Changed anchor tag to button with onclick for Gmail link -->
+            <button type="button" class="neumorphic-button contact-button" onclick="window.open('https://mail.google.com/mail/?view=cm&fs=1&to={{ user.email }}', '_blank');">
+                Contact Owner via Gmail
+            </button>
         </div>
     </div>
 {% endblock %}

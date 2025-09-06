@@ -7,27 +7,63 @@ from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from .ml_model import get_location_names, get_estimated_price
 from django.contrib import messages
-
+from django.core.mail import send_mail
+from django.conf import settings
 
 # Create your views here.
 
 def home(request):
     return render(request, 'home.html')
 
+# def dashboard(request):
+#     if not request.session.get('user_id'):
+#         return redirect('login')
+#     ob = property_table.objects.filter(status="accepted")
+#     return render(request, 'dashboard.html', {'val': ob})
+
 def dashboard(request):
     if not request.session.get('user_id'):
         return redirect('login')
-    ob = property_table.objects.filter(status="accepted")
+    user_id = request.session.get('user_id')
+    ob = property_table.objects.filter(status="accepted").exclude(USER__id=user_id)
     return render(request, 'dashboard.html', {'val': ob})
+
+
+
+
+# def property_page(request, property_id):
+#     # Check if user is logged in
+#     if not request.session.get('user_id'):
+#         return redirect('login')
+#     property_obj = get_object_or_404(property_table, id=property_id)
+#     user_obj = property_obj.USER
+#     return render(request, 'property_page.html', {'property': property_obj, 'user': user_obj})
 
 
 def property_page(request, property_id):
     # Check if user is logged in
     if not request.session.get('user_id'):
         return redirect('login')
+
     property_obj = get_object_or_404(property_table, id=property_id)
     user_obj = property_obj.USER
-    return render(request, 'property_page.html', {'property': property_obj, 'user': user_obj})
+
+    # Get predicted price
+    predicted_price = get_estimated_price(
+        property_obj.area,  # Assuming 'area' is the location
+        float(property_obj.area),  # Assuming 'area' is total sqft
+        int(property_obj.bed),
+        int(property_obj.bath)
+    )
+
+    return render(request, 'property_page.html', {
+        'property': property_obj,
+        'user': user_obj,
+        'predicted_price': predicted_price,
+    })
+
+
+
 
 
 def prediction_page(request):
@@ -122,8 +158,16 @@ def forgotpassword(request):
         try:
             user_obj = user_table.objects.get(email=email)
             login_obj = user_obj.LOGIN
-            # For demonstration, display the username and password (not secure for real apps)
-            return HttpResponse(f"Your username: {login_obj.username}<br>Your password: {login_obj.password}")
+
+            subject = 'Your Login Credentials'
+            message = f"Username: {login_obj.username}\nPassword: {login_obj.password}"
+            from_email = settings.EMAIL_HOST_USER
+            to_email = [email]
+
+            send_mail(subject, message, from_email, to_email, fail_silently=False)
+
+            return HttpResponse("Email sent!")
+
         except user_table.DoesNotExist:
             return HttpResponse("Email not found.")
     return render(request, 'forgotpassword.html')

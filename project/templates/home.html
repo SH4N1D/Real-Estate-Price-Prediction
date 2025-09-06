@@ -43,8 +43,10 @@
                 <h1 class="gradient-text" data-aos="fade-right">Find Your Perfect Property in Bengaluru</h1>
                 <p data-aos="fade-left">Discover and list properties in the heart of Bengaluru's bustling real estate market. Our platform makes it easy to find your dream home or connect with potential buyers, all with transparent and simple tools.</p>
                 <div class="link-group" data-aos="fade-up" data-aos-delay="200">
-                    <a href="{% url 'signup' %}" class="neumorphic-button">Sign Up</a>
-                    <a href="{% url 'login' %}" class="neumorphic-button">Sign In</a>
+                    {% if not request.session.user_id %}
+                        <a href="{% url 'signup' %}" class="neumorphic-button">Sign Up</a>
+                        <a href="{% url 'login' %}" class="neumorphic-button">Sign In</a>
+                    {% endif %}
                 </div>
             </div>
             <div class="image-column" data-aos="zoom-in" data-aos-delay="500">

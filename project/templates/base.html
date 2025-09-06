@@ -20,13 +20,16 @@
             <div id="theme-toggle" class="theme-toggle-button"></div>
         </div>
 
+        {% if request.session.user_id %}
         <nav class="top-nav">
             <a href="{% url 'home' %}" class="neumorphic-button">Home</a>
             <a href="{% url 'prediction_page' %}" class="neumorphic-button">Prediction</a>
             <a href="{% url 'reg_page' %}" class="neumorphic-button">Register</a>
             <a href="{% url 'dashboard' %}" class="neumorphic-button">Dashboard</a>
             <a href="{% url 'profile' %}" class="neumorphic-button">Profile</a>
+            <a href="{% url 'logout' %}" class="neumorphic-button logout-button">Logout</a>
         </nav>
+        {% endif %}
 
         <div class="main-content">
             {% block content %}

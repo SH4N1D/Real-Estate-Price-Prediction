@@ -1,178 +1,247 @@
 /* ============================================================= */
-/* PROPERTY PAGE SECTIONS */
+/* PROPERTY PAGE STYLES */
 /* ============================================================= */
 
 .property-page-container {
-    max-width: 1200px;
-    margin: 0 auto;
     padding: 20px;
+    max-width: 1200px;
+    margin: 40px auto; /* Center the container with vertical margin */
     display: flex;
     flex-direction: column;
-    gap: 40px;
-}
-
-.back-button-container {
-    margin-bottom: 30px;
+    gap: 40px; /* Space between main sections */
 }
 
 .top-row-containers {
     display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    gap: 40px;
-    margin-bottom: 40px;
-    align-items: start;
+    grid-template-columns: 1fr; /* Default to single column for mobile */
+    gap: 40px; /* Space between details and image gallery */
+    margin-bottom: 0; /* No extra margin here, handled by parent gap */
 }
 
+@media (min-width: 992px) {
+    .top-row-containers {
+        grid-template-columns: 2fr 1fr; /* Details section wider than image gallery on desktop */
+    }
+}
+
+/* Details Section Styling */
 .details-section {
+    /* Inherits neumorphic-card styles */
     padding: 40px;
-    background: var(--card-background);
-    border-radius: 30px;
-    box-shadow: 
-        8px 8px 16px var(--neumorphic-dark),
-        -8px -8px 16px var(--neumorphic-light);
+    text-align: left; /* Align text to the left within this card */
 }
 
-.property-description {
+.details-section h1 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    text-align: left; /* Ensure heading is left-aligned */
+}
+
+.details-section .property-description {
     font-size: 1rem;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    opacity: 0.9;
+    line-height: 1.7;
 }
 
 .details-heading {
-    margin-top: 0;
-    text-align: left;
+    text-align: left; /* Ensure heading is left-aligned */
+    font-size: 1.8rem;
+    margin-bottom: 25px;
 }
 
 .details-list-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    margin-bottom: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid for details */
+    gap: 20px;
 }
 
 .details-list-grid p {
-    font-size: 0.95rem;
-    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 1rem;
+    margin-bottom: 0; /* Remove default paragraph margin */
+    opacity: 1; /* Ensure text is fully visible */
 }
 
+.details-list-grid p strong {
+    font-weight: 500;
+}
+
+.property-icon {
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    /* Add a subtle neumorphic inset for icons */
+    text-shadow: 1px 1px 2px var(--neumorphic-dark), -1px -1px 2px var(--neumorphic-light);
+}
+
+/* Image Gallery Section Styling */
 .image-gallery-section {
-    padding: 40px;
-    background: var(--card-background);
-    border-radius: 30px;
-    box-shadow: 
-        8px 8px 16px var(--neumorphic-dark),
-        -8px -8px 16px var(--neumorphic-light);
+    /* Inherits neumorphic-card styles */
+    padding: 30px; /* Slightly less padding for images */
     text-align: center;
+}
+
+.image-gallery-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 25px;
 }
 
 .image-gallery-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 20px;
-    margin-top: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Flexible grid for images */
+    gap: 15px;
+    padding: 15px; /* Inner padding for the grid container */
+    border-radius: 20px;
+    background: var(--card-background);
+    /* Inset shadow for the gallery background */
+    box-shadow: 
+        inset 5px 5px 10px var(--neumorphic-dark),
+        inset -5px -5px 10px var(--neumorphic-light);
+}
+
+/* Fixed size container for each gallery image */
+.gallery-image-container {
+    width: 100%; /* Take full width of its grid column */
+    height: 150px; /* Fixed height for consistency */
+    display: flex; /* Use flexbox to center image */
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    background: var(--card-background); /* Background matching card for neumorphic effect */
+    box-shadow: 
+        5px 5px 10px var(--neumorphic-dark),
+        -5px -5px 10px var(--neumorphic-light); /* Neumorphic shadow for the container */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden; /* Hide overflowing parts of the image */
+}
+
+.gallery-image-container:hover {
+    transform: scale(1.03); /* Slightly zoom in on hover */
+    box-shadow: 
+        8px 8px 16px var(--neumorphic-dark),
+        -8px -8px 16px var(--neumorphic-light); /* More pronounced shadow on hover */
 }
 
 .gallery-image {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 15px;
-    box-shadow: 
-        6px 6px 12px var(--neumorphic-dark),
-        -6px -6px 12px var(--neumorphic-light);
+    max-width: 100%; /* Ensure image doesn't overflow container */
+    max-height: 100%; /* Ensure image doesn't overflow container */
+    object-fit: contain; /* Changed to contain: scales the image to fit without cropping */
+    border-radius: 10px; /* Slightly smaller border-radius for the image inside container */
+    /* No direct shadow on image, container handles it */
 }
 
+/* Owner Info Section Styling */
 .owner-info-container {
+    /* Inherits neumorphic-card styles */
     padding: 40px;
-    background: var(--card-background);
-    border-radius: 30px;
-    box-shadow: 
-        8px 8px 16px var(--neumorphic-dark),
-        -8px -8px 16px var(--neumorphic-light);
+    text-align: center;
+}
+
+.owner-info-container h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
 }
 
 .owner-details {
     display: flex;
+    flex-direction: column; /* Stack on mobile */
     align-items: center;
-    gap: 20px;
-    margin-top: 15px;
-    margin-bottom: 20px;
-    text-align: left;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+@media (min-width: 768px) {
+    .owner-details {
+        flex-direction: row; /* Row on larger screens */
+        justify-content: center;
+        text-align: left; /* Align text to left when in a row */
+    }
 }
 
 .owner-image-container {
-    width: 80px;
-    height: 80px;
+    width: 150px;
+    height: 150px;
+    min-width: 150px; /* Ensure it doesn't shrink too much */
     border-radius: 50%;
     overflow: hidden;
+    padding: 10px; /* Padding to create the inset effect */
+    background: var(--card-background);
+    /* Inset shadow for the circular image container */
     box-shadow: 
-        4px 4px 8px var(--neumorphic-dark),
-        -4px -4px 8px var(--neumorphic-light);
-    flex-shrink: 0;
+        inset 5px 5px 10px var(--neumorphic-dark),
+        inset -5px -5px 10px var(--neumorphic-light);
 }
 
 .owner-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 50%;
+    /* Subtle outer shadow for the image itself */
+    box-shadow: 
+        5px 5px 10px var(--neumorphic-dark),
+        -5px -5px 10px var(--neumorphic-light);
 }
 
 .owner-text {
-    flex-grow: 1;
-    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center text on mobile */
+    gap: 10px;
+    flex-grow: 1; /* Allow text to take available space */
+}
+
+@media (min-width: 768px) {
+    .owner-text {
+        align-items: flex-start; /* Align text to start when in a row */
+    }
 }
 
 .owner-text p {
-    font-size: 0.9rem;
-    margin-bottom: 5px;
+    margin: 0; /* Remove default paragraph margin */
+    font-size: 1rem;
+    opacity: 1; /* Ensure full visibility */
 }
 
 .contact-button {
-    width: 100%;
-    margin-top: 10px;
+    margin-top: 20px;
+    width: auto; /* Allow button to size based on content */
+    display: inline-flex; /* Use flex for icon alignment */
+    justify-content: center; /* Center content within button */
+    /* Inherits neumorphic-button styles */
+    cursor: pointer; /* Indicate it's clickable */
+    border: none; /* Remove default button border */
 }
 
-@media (max-width: 992px) {
-    .property-page-container {
-        padding: 20px;
-    }
-    .top-row-containers {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-    .details-section, .image-gallery-section {
-        padding: 30px;
-    }
-    .top-nav {
-        flex-wrap: wrap;
-        justify-content: center;
-        margin-right: 0;
-        margin-left: 0;
-        padding-top: 10px;
-        gap: 10px;
-    }
-    .theme-toggle-container {
-        margin-left: 0;
-        margin-right: 0;
-    }
-}
-
+/* Responsive adjustments */
 @media (max-width: 768px) {
-    h1 { font-size: 2.5rem; }
-    h2 { font-size: 2rem; }
-    .neumorphic-card { padding: 30px; }
-    .neumorphic-form .neumorphic-button {
-        flex: 1 1 100%;
+    .details-section,
+    .image-gallery-section,
+    .owner-info-container {
+        padding: 30px; /* Reduce padding on smaller screens */
     }
-    .property-grid {
-        grid-template-columns: 1fr;
+
+    .details-section h1 {
+        font-size: 2rem;
     }
-    .property-card {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
+
+    .details-heading,
+    .image-gallery-section h2,
+    .owner-info-container h2 {
+        font-size: 1.6rem;
     }
-    .property-details {
-        text-align: center;
+
+    .details-list-grid {
+        grid-template-columns: 1fr; /* Stack details on very small screens */
+    }
+
+    .image-gallery-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Adjust image grid for smaller screens */
+    }
+
+    .gallery-image-container {
+        height: 120px; /* Adjust height for smaller screens */
     }
 }
