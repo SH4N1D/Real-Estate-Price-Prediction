@@ -2,13 +2,12 @@ from django.db import models
 
 # Create your models here.
 class login_table(models.Model):
-    username = models.CharField(max_length=100)
+    username = models.CharField(max_length=100, unique=True)  # Added unique=True
     password = models.CharField(max_length=100)
 
 class user_table(models.Model):
     LOGIN = models.ForeignKey(login_table, on_delete=models.CASCADE)
-    username = models.CharField(max_length=100)
-    email = models.EmailField(max_length=100)
+    email = models.CharField(max_length=100)
     fname = models.CharField(max_length=100)
     lname = models.CharField(max_length=100)
     image = models.ImageField(upload_to='profile_images/', default='default.jpg')

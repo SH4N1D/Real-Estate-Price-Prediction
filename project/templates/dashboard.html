@@ -57,11 +57,6 @@
 
 
 
-
-
-
-
-
 {% load static %}
 
 {% block title %}Dashboard{% endblock %}
@@ -106,7 +101,7 @@ alert("{{ message|escapejs }}");
 
 <div class="card-content">
 <div class="price-section">
-<span class="main-price">${{ property.price }}</span>
+<span class="main-price">₹{{ property.price }}</span>
 </div>
 
 <h3 class="card-title">{{ property.property_name }}</h3>

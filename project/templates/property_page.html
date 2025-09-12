@@ -62,8 +62,8 @@
                     <p><i class="fa-solid fa-square-full property-icon"></i> <strong>Area:</strong> {{ property.area }}</p>
                     <p><i class="fa-solid fa-bed property-icon"></i> <strong>Bedrooms:</strong> {{ property.bed }}</p>
                     <p><i class="fa-solid fa-bath property-icon"></i> <strong>Bathrooms:</strong> {{ property.bath }}</p>
-                    <p><i class="fa-solid fa-indian-rupee-sign property-icon"></i> <strong>Price:</strong> ${{ property.price }}</p>
-                    <p><i class="fa-solid fa-chart-line property-icon"></i> <strong>Predicted Price:</strong> ₹{{ predicted_price }} Lakh</p>
+                    <p><i class="fa-solid fa-indian-rupee-sign property-icon"></i> <strong>Price:</strong> ₹{{ property.price }}</p>
+                    <p><i class="fa-solid fa-chart-line property-icon"></i> <strong>Estimated Price:</strong> ₹{{ predicted_price }} Lakh</p>
                 </div>
             </div>
 
@@ -94,7 +94,6 @@
                 </div>
                 <div class="owner-text">
                     <p><strong>Owner Name:</strong> {{ user.fname }} {{ user.lname }}</p>
-                    <p><strong>Username:</strong> {{ user.username }}</p>
                     <p><strong>Phone:</strong> {{ user.phone }}</p>
                     <p><strong>Email:</strong> {{ user.email }}</p>
                     <p><strong>Place:</strong> {{ user.place }}</p>

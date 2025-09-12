@@ -82,7 +82,7 @@
 {% block content %}
     <div class="neumorphic-card form-container" data-aos="fade-up">
         <h1 class="gradient-text">Register New Property</h1>
-
+        
         <form method="post" enctype="multipart/form-data" class="neumorphic-form">
             {% csrf_token %}
             <div class="form-grid">
@@ -92,32 +92,32 @@
                 </div>
                 <div class="form-group-item">
                     <label for="street"><i class="fa-solid fa-road"></i> Street:</label>
-                    <input type="text" id="street" name="street" placeholder="e.g., Koramangala 5th Block" class="neumorphic-input">
+                    <select id="street" name="street" class="neumorphic-input">
+                        {% for street in streets %}
+                            <option value="{{ street }}" {% if street == street_value %}selected{% endif %}>{{ street }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
                 <div class="form-group-item">
                     <label for="bed"><i class="fa-solid fa-bed"></i> Bedrooms:</label>
-                    <input type="number" id="bed" name="bed" min="1" placeholder="e.g., 3" class="neumorphic-input">
+                    <input type="number" id="bed" name="bed"  min="1" placeholder="e.g., 3" class="neumorphic-input" value="{{ bed_value }}">
                 </div>
                 <div class="form-group-item">
                     <label for="bath"><i class="fa-solid fa-bath"></i> Bathrooms:</label>
-                    <input type="number" id="bath" name="bath" min="1" placeholder="e.g., 2" class="neumorphic-input">
+                    <input type="number" id="bath" name="bath" min="1" placeholder="e.g., 2" class="neumorphic-input" value="{{ bath_value }}">
                 </div>
                 <div class="form-group-item">
                     <label for="sqft"><i class="fa-solid fa-ruler-combined"></i> Square Feet:</label>
-                    <input type="number" id="sqft" name="sqft" min="1" placeholder="e.g., 1500" class="neumorphic-input">
+                    <input type="number" id="sqft" name="sqft" min="1" placeholder="e.g., 1500" class="neumorphic-input" value="{{ area_value }}">
                 </div>
                 <div class="form-group-item">
                     <label for="price"><i class="fa-solid fa-indian-rupee-sign"></i> Price:</label>
-                    <input type="number" id="price" name="price" min="1" placeholder="e.g., 8500000" class="neumorphic-input">
+                    <input type="number" id="price" name="price" min="1" placeholder="Enter price" class="neumorphic-input">
                 </div>
-                <div class="form-group-item">
+                {% comment %} <div class="form-group-item">
                     <label for="status"><i class="fa-solid fa-check"></i> Status:</label>
                     <input type="text" id="status" name="status" value="Pending" readonly class="neumorphic-input">
-                </div>
-                <div class="form-group-item">
-                    <label for="area"><i class="fa-solid fa-square-full"></i> Area:</label>
-                    <input type="text" id="area" name="area" placeholder="e.g., Koramangala" class="neumorphic-input">
-                </div>
+                </div> {% endcomment %}
                 <div class="form-group-full">
                     <label for="description"><i class="fa-solid fa-file-alt"></i> Description:</label>
                     <textarea id="description" name="description" placeholder="Enter a detailed description of the property." class="neumorphic-textarea"></textarea>

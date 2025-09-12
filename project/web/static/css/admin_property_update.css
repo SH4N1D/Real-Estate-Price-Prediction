@@ -1,0 +1,96 @@
+/* ============================================================= */
+/* ADMIN PROPERTY UPDATE STYLES */
+/* ============================================================= */
+
+/* Back to Dashboard Link */
+.back-to-dashboard {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    padding: 10px; /* Reduced padding for a smaller button */
+    width: 40px; /* Fixed width for a square/circle button */
+    height: 40px; /* Fixed height for a square/circle button */
+    background: var(--card-background);
+    border-radius: 50%; /* Make it a circle */
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 
+        8px 8px 16px var(--neumorphic-dark),
+        -8px -8px 16px var(--neumorphic-light);
+}
+
+.back-to-dashboard:hover {
+    box-shadow: 
+        6px 6px 12px var(--neumorphic-dark),
+        -6px -6px 12px var(--neumorphic-light);
+    transform: translateY(-2px);
+    color: var(--primary-color);
+}
+
+.back-to-dashboard i {
+    margin: 0; /* Remove margin to center the icon */
+    font-size: 1.2rem; /* Increase icon size for visibility */
+}
+
+/* Form Container and Elements */
+.owner-info-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.owner-info-container label {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-color);
+    opacity: 0.9;
+}
+
+/* Base style for neumorphic select (Light Theme) */
+.select-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 60%;
+}
+
+.neumorphic-select {
+    -webkit-appearance: menulist;
+    -moz-appearance: menulist;
+    appearance: menulist;
+    background: var(--card-background);
+    border: none;
+    border-radius: 20px;
+    padding: 12px 20px; 
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: 1rem;
+    box-shadow: inset 4px 4px 8px var(--neumorphic-dark), inset -4px -4px 8px var(--neumorphic-light);
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+    width: 100%;
+}
+
+.neumorphic-select:focus {
+    outline: none;
+    box-shadow: inset 2px 2px 5px var(--neumorphic-dark), inset -2px -2px 5px var(--neumorphic-light);
+}
+
+/* Dark Theme overrides for the select */
+body.dark-theme .neumorphic-select {
+    background: var(--card-background);
+    color: var(--text-color);
+    box-shadow: inset 4px 4px 8px var(--neumorphic-dark), inset -4px -4px 8px var(--neumorphic-light);
+}
+
+body.dark-theme .neumorphic-select:focus {
+    box-shadow: inset 2px 2px 5px var(--neumorphic-dark), inset -2px -2px 5px var(--neumorphic-light);
+}
+
+/* Hide default arrow in IE11 */
+select::-ms-expand {
+    display: none;
+}   

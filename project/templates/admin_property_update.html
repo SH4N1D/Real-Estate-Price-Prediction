@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Update Property Status{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/property_page.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin_property_update.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="property-page-container" data-aos="fade-up">
+        <a href="{% url 'admindashboard' %}" class="back-to-dashboard">
+            <i class="fas fa-arrow-left"></i> 
+        </a>
+
+        <div class="top-row-containers" data-aos="fade-up">
+            <div class="neumorphic-card details-section">
+                <h1 class="gradient-text">{{ property.property_name }}</h1>
+                <p class="property-description">{{ property.description }}</p>
+
+                <h2 class="gradient-text details-heading">Property Details</h2>
+                <div class="details-list-grid">
+                    <p><i class="fa-solid fa-location-dot property-icon"></i> <strong>Street:</strong> {{ property.street }}</p>
+                    <p><i class="fa-solid fa-square-full property-icon"></i> <strong>Area:</strong> {{ property.area }}</p>
+                    <p><i class="fa-solid fa-bed property-icon"></i> <strong>Bedrooms:</strong> {{ property.bed }}</p>
+                    <p><i class="fa-solid fa-bath property-icon"></i> <strong>Bathrooms:</strong> {{ property.bath }}</p>
+                    <p><i class="fa-solid fa-indian-rupee-sign property-icon"></i> <strong>Price:</strong> ₹{{ property.price }}</p>
+                </div>
+            </div>
+
+            <div class="neumorphic-card image-gallery-section" data-aos="fade-left">
+                <h2 class="gradient-text">Property Images</h2>
+                <div class="image-gallery-grid">
+                    <div class="gallery-image-container">
+                        <img src="{{ property.image1.url }}" alt="Property Image 1" class="gallery-image">
+                    </div>
+                    <div class="gallery-image-container">
+                        <img src="{{ property.image2.url }}" alt="Property Image 2" class="gallery-image">
+                    </div>
+                    <div class="gallery-image-container">
+                        <img src="{{ property.image3.url }}" alt="Property Image 3" class="gallery-image">
+                    </div>
+                    <div class="gallery-image-container">
+                        <img src="{{ property.image4.url }}" alt="Property Image 4" class="gallery-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="neumorphic-card owner-info-container" data-aos="fade-up" data-aos-delay="200">
+            <form method="post" action="{% url 'update_property_status' property.id %}">
+                {% csrf_token %}
+                <label for="status">Status:</label>
+                <div class="select-wrapper">
+                    <select name="status" id="status" class="neumorphic-select">
+                        <option value="accepted" {% if property.status == 'accepted' %}selected{% endif %}>Accept</option>
+                        <option value="rejected" {% if property.status == 'rejected' %}selected{% endif %}>Reject</option>
+                        <option value="pending" {% if property.status == 'pending' %}selected{% endif %}>Pending</option>
+                    </select>
+                </div>
+                <button type="submit" class="neumorphic-button">Update Status</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

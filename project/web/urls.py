@@ -14,6 +14,7 @@ urlpatterns = [
     path('profile', views.profile, name='profile'),
     path('forgotpassword', views.forgotpassword, name='forgotpassword'),
     path('signup', views.signup, name='signup'),
+    path('admindashboard/', views.admindashboard_view, name='admindashboard'),  # Add this line
 
 
 # Functions for the website
@@ -21,7 +22,8 @@ urlpatterns = [
     path('profile_search/', views.profile_search, name='profile_search'),
     path('delete_property/<int:property_id>/', views.delete_property, name='delete_property'),
     path('logout/', views.logout_view, name='logout'),
-
+    path('admin_property_update/<int:property_id>/', views.admin_property_update, name='admin_property_update'),
+    path('update_property_status/<int:property_id>/', views.update_property_status, name='update_property_status'),
 
 
 
