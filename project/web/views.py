@@ -65,18 +65,142 @@ def property_page(request, property_id):
 
 
 
+# def prediction_page(request):
+#     if not request.session.get('user_id'):
+#         return redirect('login')
+#     locations = get_location_names()
+#     price = None
+#     if request.method == 'POST':
+#         location = request.POST.get('location')
+#         sqft = float(request.POST.get('sqft'))
+#         bhk = int(request.POST.get('bhk'))
+#         bath = int(request.POST.get('bath'))
+#         price = get_estimated_price(location, sqft, bhk, bath)
+#     return render(request, 'prediction_page.html', {'locations': locations, 'price': price})
+
+
+
+# In your views.py file
+
+# def prediction_page(request):
+#     if not request.session.get('user_id'):
+#         return redirect('login')
+    
+#     locations = get_location_names()
+#     price = None
+    
+#     if request.method == 'POST':
+#         # --- Get all form inputs ---
+#         location = request.POST.get('location')
+#         sqft = float(request.POST.get('sqft') or 0)
+#         bhk = int(request.POST.get('bhk') or 0)
+#         bath = int(request.POST.get('bath') or 0)
+#         age = int(request.POST.get('age') or 0)
+#         property_type = request.POST.get('ptype')
+        
+#         # 1. Get the new 'amenities' level from the form
+#         amenities_level = int(request.POST.get('amenities') or 1)
+        
+#         # --- Price Calculation ---
+#         initial_price = get_estimated_price(location, sqft, bhk, bath)
+        
+#         if initial_price is not None:
+#             # --- Define all adjustment factors ---
+            
+#             # Property Type Factors
+#             type_factors = {
+#                 'Apartment': 1.0,
+#                 'Independent House': 1.10,
+#                 'Villa': 1.25,
+#             }
+#             property_type_factor = type_factors.get(property_type, 1.0)
+            
+#             # 2. Amenities Factors
+#             amenity_factors = {
+#                 0: 0.95,  # 5% less for no amenities
+#                 1: 1.0,   # Baseline for basic amenities
+#                 2: 1.05,  # 5% more for standard
+#                 3: 1.15,  # 15% more for luxury
+#             }
+#             amenities_factor = amenity_factors.get(amenities_level, 1.0) # Default to 1.0
+
+#             # Age Depreciation Factor
+#             depreciation_rate = 0.007
+#             depreciation_factor = max(0, 1 - (age * depreciation_rate))
+            
+#             # 3. Apply ALL factors to the initial price
+#             final_price = initial_price * depreciation_factor * property_type_factor * amenities_factor
+            
+#             price = round(final_price, 2)
+            
+#     return render(request, 'prediction_page.html', {'locations': locations, 'price': price})
+
+# In your views.py file
+# In your views.py file
+
 def prediction_page(request):
     if not request.session.get('user_id'):
         return redirect('login')
+    
     locations = get_location_names()
     price = None
+    
     if request.method == 'POST':
+        # --- Get all form inputs ---
         location = request.POST.get('location')
-        sqft = float(request.POST.get('sqft'))
-        bhk = int(request.POST.get('bhk'))
-        bath = int(request.POST.get('bath'))
-        price = get_estimated_price(location, sqft, bhk, bath)
-    return render(request, 'prediction_page.html', {'locations': locations, 'price': price})
+        sqft = float(request.POST.get('sqft') or 0)
+        property_type = request.POST.get('ptype')
+        connectivity_level = int(request.POST.get('connectivity') or 1)
+
+        # --- Price Calculation ---
+        
+        # For a plot, BHK/Bath are irrelevant but the model needs them.
+        # We pass default values but will override the price logic.
+        bhk = int(request.POST.get('bhk') or 1)
+        bath = int(request.POST.get('bath') or 1)
+        initial_price = get_estimated_price(location, sqft, bhk, bath)
+        
+        if initial_price is not None:
+            # Check if the property type is a Plot
+            if property_type == 'Plot':
+                # For a plot, we ignore most factors and apply a land value factor.
+                # This assumes land value is ~40% of the total property value.
+                plot_factor = 0.40
+                
+                # Connectivity is still relevant for a plot
+                connectivity_factors = {0: 0.90, 1: 1.0, 2: 1.10, 3: 1.20}
+                connectivity_factor = connectivity_factors.get(connectivity_level, 1.0)
+
+                final_price = initial_price * plot_factor * connectivity_factor
+            
+            else:
+                # --- This is the existing logic for Houses, Villas, and Apartments ---
+                age = int(request.POST.get('age') or 0)
+                amenities_level = int(request.POST.get('amenities') or 1)
+                floor_level = request.POST.get('floor_level', 'Middle')
+
+                type_factors = {'Apartment': 1.0, 'Independent House': 1.10, 'Villa': 1.25}
+                property_type_factor = type_factors.get(property_type, 1.0)
+                
+                amenity_factors = {0: 0.95, 1: 1.0, 2: 1.05, 3: 1.15}
+                amenities_factor = amenity_factors.get(amenities_level, 1.0)
+                
+                connectivity_factors = {0: 0.90, 1: 1.0, 2: 1.10, 3: 1.20}
+                connectivity_factor = connectivity_factors.get(connectivity_level, 1.0)
+
+                depreciation_rate = 0.007
+                depreciation_factor = max(0, 1 - (age * depreciation_rate))
+                
+                floor_factor = 1.0
+                if property_type == 'Apartment':
+                    floor_level_factors = {'Lower': 0.98, 'Middle': 1.0, 'Higher': 1.05}
+                    floor_factor = floor_level_factors.get(floor_level, 1.0)
+
+                final_price = initial_price * depreciation_factor * property_type_factor * amenities_factor * connectivity_factor * floor_factor
+            
+            price = round(final_price, 2)
+            
+    return render(request, 'prediction_page.html', {'locations': locations, 'price': price, 'lakh': 'Lakh'})
 
 
 
@@ -216,52 +340,52 @@ def admindashboard_view(request):
 #Funtions for the website
 
 
-# def login(request):
-#     if request.method == 'POST':
-#         username = request.POST['username']
-#         password = request.POST['password']
-#         try:
-#             login_obj = login_table.objects.get(username=username, password=password)
-#             user_obj = user_table.objects.get(LOGIN=login_obj)
-#             # Set session variables
-#             request.session['user_id'] = user_obj.id
-#             request.session['username'] = login_obj.username
-#             return redirect('dashboard')
-#         except (login_table.DoesNotExist, user_table.DoesNotExist):
-#             return HttpResponse("Invalid credentials")
-#     return render(request, 'login.html')
-
-
 def login(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-
-        # Check for admin credentials first (hardcoded)
-        if username == 'admin' and password == '123':
-            # Create a dummy user object for admin
-            class AdminUser:  # Create a dummy class
-                def __init__(self, username):
-                    self.username = username
-            class AdminLogin:
-                def __init__(self, username):
-                    self.username = username
-            admin_login = AdminLogin(username='admin')
-            admin_user = AdminUser(username='admin')
-            request.session['user_id'] = -1  # Use -1 or any non-existent id
-            request.session['username'] = 'admin'
-            return redirect('admindashboard')
-        else:
-            try:
-                login_obj = login_table.objects.get(username=username, password=password)
-                user_obj = user_table.objects.get(LOGIN=login_obj)
-                # Set session variables
-                request.session['user_id'] = user_obj.id
-                request.session['username'] = login_obj.username
-                return redirect('dashboard')
-            except (login_table.DoesNotExist, user_table.DoesNotExist):
-                return HttpResponse("Invalid credentials")
+        try:
+            login_obj = login_table.objects.get(username=username, password=password)
+            user_obj = user_table.objects.get(LOGIN=login_obj)
+            # Set session variables
+            request.session['user_id'] = user_obj.id
+            request.session['username'] = login_obj.username
+            return redirect('dashboard')
+        except (login_table.DoesNotExist, user_table.DoesNotExist):
+            return HttpResponse("Invalid credentials")
     return render(request, 'login.html')
+
+
+# def login(request):
+#     if request.method == 'POST':
+#         username = request.POST['username']
+#         password = request.POST['password']
+
+#         # Check for admin credentials first (hardcoded)
+#         if username == 'admin' and password == '123':
+#             # Create a dummy user object for admin
+#             class AdminUser:  # Create a dummy class
+#                 def __init__(self, username):
+#                     self.username = username
+#             class AdminLogin:
+#                 def __init__(self, username):
+#                     self.username = username
+#             admin_login = AdminLogin(username='admin')
+#             admin_user = AdminUser(username='admin')
+#             request.session['user_id'] = -1  # Use -1 or any non-existent id
+#             request.session['username'] = 'admin'
+#             return redirect('admindashboard')
+#         else:
+#             try:
+#                 login_obj = login_table.objects.get(username=username, password=password)
+#                 user_obj = user_table.objects.get(LOGIN=login_obj)
+#                 # Set session variables
+#                 request.session['user_id'] = user_obj.id
+#                 request.session['username'] = login_obj.username
+#                 return redirect('dashboard')
+#             except (login_table.DoesNotExist, user_table.DoesNotExist):
+#                 return HttpResponse("Invalid credentials")
+#     return render(request, 'login.html')
 
 
 

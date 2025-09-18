@@ -70,6 +70,15 @@
                 </div>
 
                 <div class="form-group-item">
+                 <label for="ptype"><i class="fa-solid fa-house-chimney"></i> Property Type:</label>
+                    <select name="ptype" id="ptype" required class="neumorphic-input">
+                        <option value="Independent House">Independent House</option>
+                        <option value="Apartment">Apartment</option>
+                        <option value="Villa">Villa</option>
+                        <option value="Plot">Plot</option> </select>
+            </div>
+
+            <div class="form-group-item">
                     <label for="bhk"><i class="fa-solid fa-bed"></i> BHK:</label>
                     <input type="number" id="bhk" name="bhk" required placeholder="e.g. 1" min="1" class="neumorphic-input">
                 </div>
@@ -78,6 +87,40 @@
                     <label for="bath"><i class="fa-solid fa-bath"></i> Bath:</label>
                     <input type="number" id="bath" name="bath" required placeholder="e.g. 1" min="1" class="neumorphic-input">
                 </div>
+
+                 <div class="form-group-item">
+                    <label for="age"><i class="fa-solid fa-calendar-days"></i> Age of Property (years):</label>
+                    <input type="number" id="age" name="age" required placeholder="e.g. 5" min="0" class="neumorphic-input">
+            </div>
+                <div class="form-group-item" id="floor-level-group" style="display: none;">
+                    <label for="floor_level"><i class="fa-solid fa-layer-group"></i> Floor Level:</label>
+                    <select name="floor_level" id="floor_level" class="neumorphic-input">
+                        <option value="Lower">Lower Floors</option>
+                        <option value="Middle">Middle Floors</option>
+                        <option value="Higher">Higher Floors</option>
+                    </select>
+                </div>
+
+                 <div class="form-group-item">
+                    <label for="amenities"><i class="fa-solid fa-star"></i> Amenities:</label>
+                    <select id="amenities" name="amenities" required class="neumorphic-input">
+                      <option value="0">No amenities (basic building)</option>
+                      <option value="1">Basic (parking, security)</option>
+                      <option value="2">Standard (parking, security, power backup, pool)</option>
+                      <option value="3">Luxury (Clubhouse, gym, pool, garden, premium)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group-item">
+                    <label for="connectivity"><i class="fa-solid fa-route"></i> Connectivity:</label>
+                    <select id="connectivity" name="connectivity" required class="neumorphic-input">
+                      <option value="0">Poor (far from Town/IT hub/Shopping Malls)</option>
+                      <option value="1">Average (basic bus/road access)</option>
+                      <option value="2">Good (nearby Town/IT hub/Shopping Malls)</option>
+                      <option value="3">Excellent (Town + IT hub + main road)</option>
+                    </select>
+                </div>
+
             </div>
 
             <button type="submit" class="neumorphic-button register-button">Predict</button>
@@ -90,4 +133,62 @@
             </div>
         {% endif %}
     </div>
+
+   {% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const propertyTypeSelect = document.getElementById('ptype');
+        
+        // Get the input/select elements themselves
+        const bhkInput = document.getElementById('bhk');
+        const bathInput = document.getElementById('bath');
+        const ageInput = document.getElementById('age');
+        const amenitiesInput = document.getElementById('amenities');
+        const floorLevelInput = document.getElementById('floor_level');
+
+        // Get the parent containers (form groups)
+        const floorLevelGroup = document.getElementById('floor-level-group');
+        const bhkGroup = bhkInput.parentElement;
+        const bathGroup = bathInput.parentElement;
+        const ageGroup = ageInput.parentElement;
+        const amenitiesGroup = amenitiesInput.parentElement;
+
+        function toggleFields() {
+            const selectedType = propertyTypeSelect.value;
+
+            // --- Set default state: show everything and make it required ---
+            bhkGroup.style.display = 'block';
+            bhkInput.required = true;
+            bathGroup.style.display = 'block';
+            bathInput.required = true;
+            ageGroup.style.display = 'block';
+            ageInput.required = true;
+            amenitiesGroup.style.display = 'block';
+            amenitiesInput.required = true;
+
+            // --- Handle conditional fields ---
+            floorLevelGroup.style.display = 'none'; // Always hide floor level by default
+            floorLevelInput.required = false;      // Floor level is never a required field
+
+            if (selectedType === 'Apartment') {
+                floorLevelGroup.style.display = 'block';
+            } else if (selectedType === 'Plot') {
+                // Hide fields AND make them NOT required
+                bhkGroup.style.display = 'none';
+                bhkInput.required = false;
+                bathGroup.style.display = 'none';
+                bathInput.required = false;
+                ageGroup.style.display = 'none';
+                ageInput.required = false;
+                amenitiesGroup.style.display = 'none';
+                amenitiesInput.required = false;
+            }
+        }
+
+        // Run on page load and when the selection changes
+        toggleFields(); 
+        propertyTypeSelect.addEventListener('change', toggleFields);
+    });
+</script>
+{% endblock %}
 {% endblock %}
