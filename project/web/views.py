@@ -164,7 +164,7 @@ def prediction_page(request):
             # Check if the property type is a Plot
             if property_type == 'Plot':
                 # For a plot, we ignore most factors and apply a land value factor.
-                # This assumes land value is ~40% of the total property value.
+                # land value is ~40% of the total property value.
                 plot_factor = 0.40
                 
                 # Connectivity is still relevant for a plot
