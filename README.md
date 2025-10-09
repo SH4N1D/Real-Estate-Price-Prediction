@@ -96,6 +96,6 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## 📧 Contact
 
-SHANID – [your.email@example.com](mailto:shanidpsha@gmail.com)
+SHANID – [Mailto](mailto:shanidpsha@gmail.com)
 
 Project Link: [https://github.com/SHANID/Real-Estate-Price-Prediction](https://github.com/SHANID/Real-Estate-Price-Prediction)
