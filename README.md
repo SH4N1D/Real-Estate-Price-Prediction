@@ -98,4 +98,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 SHANID – [Mailto](mailto:shanidpsha@gmail.com)
 
-Project Link: [https://github.com/SHANID/Real-Estate-Price-Prediction](https://github.com/SH4N1D/Real-Estate-Price-Prediction)
+Project Link: [https://github.com/SH4N1D/Real-Estate-Price-Prediction](https://github.com/SH4N1D/Real-Estate-Price-Prediction)
