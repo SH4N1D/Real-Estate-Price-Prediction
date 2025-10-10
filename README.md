@@ -10,7 +10,7 @@ A full-stack web application that predicts house prices in Bengaluru using a mac
 
 Here's a look at the prediction interface. The first image shows the empty form, and the second demonstrates an example input with a predicted price.
 
-### Empty Prediction Form
+### Prediction Form
 ![Empty Prediction Form](./Screenshot%20(425).png)
 
 ### Predicted Price Example
