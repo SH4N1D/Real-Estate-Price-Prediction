@@ -49,7 +49,7 @@
 
 {% block content %}
     <div class="neumorphic-card form-container" data-aos="fade-up">
-        <h1 class="gradient-text">Predict House Price</h1>
+        <h1 class="gradient-text">Predict Price</h1>
         <p class="form-description">Enter the details below to get an estimated price for your property in Bengaluru.</p>
 
         <form method="post" class="neumorphic-form">
@@ -92,6 +92,17 @@
                     <label for="age"><i class="fa-solid fa-calendar-days"></i> Age of Property (years):</label>
                     <input type="number" id="age" name="age" required placeholder="e.g. 5" min="0" class="neumorphic-input">
             </div>
+
+            <div class="form-group-item">
+                    <label for="quality"><i class="fa-solid fa-gem"></i> Property Quality & Condition:</label>
+                    <select id="quality" name="quality" required class="neumorphic-input">
+                        <option value="0">Basic (Older, needs work)</option>
+                        <option value="1">Standard (Well-maintained)</option>
+                        <option value="2">Prime (Premium Location OR Renovated)</option>
+                        <option value="3">Luxury (Premium Location AND Renovated)</option>
+                    </select>
+                </div>
+
                 <div class="form-group-item" id="floor-level-group" style="display: none;">
                     <label for="floor_level"><i class="fa-solid fa-layer-group"></i> Floor Level:</label>
                     <select name="floor_level" id="floor_level" class="neumorphic-input">
@@ -134,54 +145,54 @@
         {% endif %}
     </div>
 
-   {% block extra_js %}
+  {% block extra_js %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const propertyTypeSelect = document.getElementById('ptype');
         
-        // Get the input/select elements themselves
-        const bhkInput = document.getElementById('bhk');
-        const bathInput = document.getElementById('bath');
-        const ageInput = document.getElementById('age');
-        const amenitiesInput = document.getElementById('amenities');
-        const floorLevelInput = document.getElementById('floor_level');
+        // --- Get all input/select elements that can be hidden ---
+        const allInputs = {
+            bhk: document.getElementById('bhk'),
+            bath: document.getElementById('bath'),
+            age: document.getElementById('age'),
+            amenities: document.getElementById('amenities'),
+            floor_level: document.getElementById('floor_level'),
+            quality: document.getElementById('quality') // Our new single input
+        };
 
-        // Get the parent containers (form groups)
-        const floorLevelGroup = document.getElementById('floor-level-group');
-        const bhkGroup = bhkInput.parentElement;
-        const bathGroup = bathInput.parentElement;
-        const ageGroup = ageInput.parentElement;
-        const amenitiesGroup = amenitiesInput.parentElement;
+        // --- Get all their parent containers (form groups) ---
+        const allGroups = {
+            bhk: allInputs.bhk.parentElement,
+            bath: allInputs.bath.parentElement,
+            age: allInputs.age.parentElement,
+            amenities: allInputs.amenities.parentElement,
+            floor_level: document.getElementById('floor-level-group'),
+            quality: allInputs.quality.parentElement
+        };
 
         function toggleFields() {
             const selectedType = propertyTypeSelect.value;
 
-            // --- Set default state: show everything and make it required ---
-            bhkGroup.style.display = 'block';
-            bhkInput.required = true;
-            bathGroup.style.display = 'block';
-            bathInput.required = true;
-            ageGroup.style.display = 'block';
-            ageInput.required = true;
-            amenitiesGroup.style.display = 'block';
-            amenitiesInput.required = true;
+            // --- Set default state: show all fields and make them required ---
+            for (const key in allInputs) {
+                if (key !== 'floor_level') {
+                    allGroups[key].style.display = 'block';
+                    allInputs[key].required = true;
+                }
+            }
+            allGroups.floor_level.style.display = 'none';
+            allInputs.floor_level.required = false;
 
-            // --- Handle conditional fields ---
-            floorLevelGroup.style.display = 'none'; // Always hide floor level by default
-            floorLevelInput.required = false;      // Floor level is never a required field
-
+            // --- Handle conditional logic ---
             if (selectedType === 'Apartment') {
-                floorLevelGroup.style.display = 'block';
+                allGroups.floor_level.style.display = 'block';
             } else if (selectedType === 'Plot') {
-                // Hide fields AND make them NOT required
-                bhkGroup.style.display = 'none';
-                bhkInput.required = false;
-                bathGroup.style.display = 'none';
-                bathInput.required = false;
-                ageGroup.style.display = 'none';
-                ageInput.required = false;
-                amenitiesGroup.style.display = 'none';
-                amenitiesInput.required = false;
+                // For a Plot, hide all irrelevant fields
+                const fieldsToHide = ['bhk', 'bath', 'age', 'amenities', 'floor_level', 'quality'];
+                fieldsToHide.forEach(key => {
+                    allGroups[key].style.display = 'none';
+                    allInputs[key].required = false;
+                });
             }
         }
 

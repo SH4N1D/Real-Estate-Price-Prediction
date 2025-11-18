@@ -24,8 +24,10 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('admin_property_update/<int:property_id>/', views.admin_property_update, name='admin_property_update'),
     path('update_property_status/<int:property_id>/', views.update_property_status, name='update_property_status'),
-
-
+    path('forgot_password/', views.forgot_password, name='forgot_password'),
+    path('verify_otp/', views.verify_otp, name='verify_otp'),
+    path('set_new_password/', views.set_new_password, name='set_new_password'),
+    path('profile_search/', views.profile_search, name='profile_search'),
 
 
 

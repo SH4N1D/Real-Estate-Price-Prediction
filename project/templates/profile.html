@@ -115,7 +115,7 @@
         <!-- Search Form -->
         <div class="search-form-card neumorphic-card" data-aos="fade-up" data-aos-delay="200">
             <h2 class="gradient-text">Search Your Properties</h2>
-            <form class="profile-search-form" method="GET">
+            <form class="profile-search-form" method="GET" action="{% url 'profile_search' %}">
                 <input type="text" name="q" class="profile-search-input" placeholder="Name, street, description..." value="{{ request.GET.q }}">
                 <input type="text" name="area" class="profile-search-input" placeholder="Area" value="{{ request.GET.area }}">
                 <input type="number" name="min_price" class="profile-search-input" placeholder="Min Price" value="{{ request.GET.min_price }}">

@@ -70,7 +70,7 @@
             <div class="form-grid">
                 <div class="form-group-item">
                     <label for="username">Username:</label>
-                    <input type="text" id="username" name="username" required placeholder="Choose a unique username" class="neumorphic-input">
+                    <input type="text" id="username" name="username" required placeholder="Choose a unique username" class="neumorphic-input" minlength="5" pattern="^[a-zA-Z0-9_]+$" title="Username must be at least 5 characters long and can only contain alphanumeric characters and underscores.">
                 </div>
                 <div class="form-group-item">
                     <label for="email">Email Address:</label>
@@ -78,7 +78,7 @@
                 </div>
                 <div class="form-group-item">
                     <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required placeholder="Enter a strong password" class="neumorphic-input">
+                    <input type="password" id="password" name="password" required placeholder="Enter a strong password" class="neumorphic-input" minlength="8" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" title="Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character.">
                 </div>
                 <div class="form-group-item">
                     <label for="confirm_password">Confirm Password:</label>
@@ -90,27 +90,26 @@
             <div class="form-grid">
                 <div class="form-group-item">
                     <label for="fname">First Name:</label>
-                    <input type="text" id="fname" name="fname" required placeholder="e.g., Anjali" class="neumorphic-input">
+                    <input type="text" id="fname" name="fname" required placeholder="e.g., Anjali" class="neumorphic-input" minlength="2" pattern="^[a-zA-Z]+$" title="First name must be at least 2 characters long and can only contain alphabetic characters.">
                 </div>
                 <div class="form-group-item">
                     <label for="lname">Last Name:</label>
-                    <input type="text" id="lname" name="lname" required placeholder="e.g., Menon" class="neumorphic-input">
+                    <input type="text" id="lname" name="lname" required placeholder="e.g., Menon" class="neumorphic-input" minlength="2" pattern="^[a-zA-Z]+$" title="Last name must be at least 2 characters long and can only contain alphabetic characters.">
                 </div>
                 <div class="form-group-item">
                     <label for="phone">Phone:</label>
-                    <input type="text" id="phone" name="phone" required placeholder="Your contact number" class="neumorphic-input">
+                    <input type="text" id="phone" name="phone" required placeholder="Your contact number" class="neumorphic-input" pattern="^[0-9]{10}$" title="Phone number must be a valid 10-digit number.">
                 </div>
                 <div class="form-group-item">
                     <label for="place">Place:</label>
-                    <input type="text" id="place" name="place" required placeholder="e.g., Kozhikode, Kerala" class="neumorphic-input">
+                    <input type="text" id="place" name="place" required placeholder="e.g., Kozhikode, Kerala" class="neumorphic-input" minlength="3" pattern="^[a-zA-Z\s,]+$" title="Place must be at least 3 characters long and can only contain alphabetic characters, spaces, and commas.">
                 </div>
             </div>
 
-            <h3 class="form-section-heading">Profile Image (Optional)</h3>
+            <h3 class="form-section-heading">Profile Image </h3>
             <div class="form-group-full">
                 <label for="image">Choose File</label>
-                <input type="file" id="image" name="image" class="neumorphic-input-file">
-            </div>
+                <input type="file" id="image" name="image" class="neumorphic-input-file" required>            </div>
 
             <button type="submit" class="neumorphic-button register-button">Register</button>
         </form>
@@ -119,4 +118,20 @@
             <a href="{% url 'login' %}">Already have an account? Login</a>
         </div>
     </div>
+
+    <script>
+        const password = document.getElementById("password");
+        const confirmPassword = document.getElementById("confirm_password");
+
+        function validatePassword(){
+          if(password.value != confirmPassword.value) {
+            confirmPassword.setCustomValidity("Passwords Don't Match");
+          } else {
+            confirmPassword.setCustomValidity('');
+          }
+        }
+
+        password.onchange = validatePassword;
+        confirmPassword.onkeyup = validatePassword;
+    </script>
 {% endblock %}

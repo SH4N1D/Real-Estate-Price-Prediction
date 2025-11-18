@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/forgot.css' %}">
+{% endblock %}
+
+{% block title %}Verify OTP{% endblock %}
+
+{% block content %}
+<div class="neumorphic-card form-container" data-aos="fade-up">
+    <h1 class="gradient-text">Verify Your OTP</h1>
+    <p class="form-description">An OTP has been sent to your email. Please check your inbox (and spam folder).</p>
+
+    <form method="post" class="neumorphic-form">
+        {% csrf_token %}
+        <div class="form-group-item">
+            <label for="otp"><i class="fa-solid fa-envelope"></i> 6-Digit OTP:</label>
+            <input type="text" name="otp" id="otp" class="neumorphic-input" placeholder="Enter the OTP" required maxlength="6">
+        </div>
+        <button type="submit" class="neumorphic-button register-button">Verify OTP</button>
+    </form>
+</div>
+{% endblock %}

@@ -131,9 +131,15 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # Or another backend
-EMAIL_HOST = 'smtp.gmail.com'  # Or your SMTP server
-EMAIL_PORT = 587  # Or your SMTP port
-EMAIL_USE_TLS = True  # Or EMAIL_USE_SSL = True
-EMAIL_HOST_USER = 'your_email@gmail.com'  # Your email address
-EMAIL_HOST_PASSWORD = 'your_email_password'  # Your email password
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True  # For secure connection
+# settings.py
+# ...
+EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
+# ...
+
+# This is the "From" address users will see
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
